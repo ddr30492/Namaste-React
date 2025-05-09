@@ -1,52 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-const heading = React.createElement(
+const Heading =  function () {
+  return (
+    <>
+      <h1 id="heading" className="header">Welcome to React Heading Element!</h1>
+      <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+        <img src="https://reactjs.org/logo-og.png" alt="React Logo" style={{ height: "100px", width: "auto" }}/>
+      </a>
+    </>
+  )
+};
 
-  "h1",
-  {
-    className: "heading",
-    id: "heading",
-    style: {
-      color: "blue",
-      textAlign: "center",
-      fontSize: "50px",
-    },
-    onClick: () => {
-      alert("Hello, React!");
-    },
-  },
-  "First, React Program Using CDN!"
-);
-// Create an h1 element with text it will retrun an object
-console.log(heading);
 
-const parent = React.createElement(
-  "div",
-  {
-    className: "parent",
-    id: "parent",
-  },
-  [
-    React.createElement("div", { id: "child", key: "div1" }, [
-      React.createElement("h1", {key: '1'}, "I am h1 tag fdfdf"),
-      React.createElement("h2", {key: '2'}, "I am h2 tag"),
-    ]),
-    React.createElement("div", { id: "child2", key: "div2" }, [
-      React.createElement("h1", {key: '1'}, "I am h1 tag"),
-      React.createElement("h2", {key: '2'}, "I am h2 tag"),
-    ]),
-  ]
-); // Create a parent div element and add the heading as a child
+//React Component
+// Class Component : OLD WAY
 
-console.log(parent);
+// function Component : NEW WAY : Normal jas function and It retrun some JSX
+//componenet composition: it is a way to combine multiple components into a single component please check the below example
 
-// Create a root element and render the heading
+const numberArry  = [0,10,20,50,15,25];
+const max = Math.max(...numberArry);
+const HeadingComponent = () => {
+  return (
+    <>
+      {/* first type */}
+      <Heading />
+      {/* Second type */}
+      <Heading></Heading>
+      {/* third type */}
+      {Heading()}
+      <h2>{max}</h2>
+      <h1 id="heading" className="header">
+        Welcome to React!
+      </h1>
+    </>
+  );
+}
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(parent);
-
-
-
-// for creating econd root and rendering the heading
-const root2 = ReactDOM.createRoot(document.getElementById("root2"));
-root2.render(heading);
+root.render(<HeadingComponent />);
