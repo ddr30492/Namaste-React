@@ -137,3 +137,12 @@ body .search-bar{
 .restaurant-item .rating span:focus{
     outline: none;
 }
+
+.btn-filter{
+    padding: 10px 20px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
