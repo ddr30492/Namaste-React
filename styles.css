@@ -29,6 +29,7 @@ header .container{
     display: flex;
     list-style: none;
     gap: 20px;
+    align-items: center;
 }
 .nav-items ul li{
     position: relative;
@@ -145,4 +146,42 @@ body .search-bar{
     color: white;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+}
+.shimmer-item {
+  width: calc(25% - 16px);
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+.shimmer-item:nth-child(odd) {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+}
+.shimmer-item:nth-child(even) {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+}
+
+.btn.btn-login{
+    color: #fff;
+    cursor: pointer;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
 }
