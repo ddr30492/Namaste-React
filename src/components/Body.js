@@ -16,11 +16,11 @@ const Body = () => {
   const [resJsonList, setResJsonList] = useState([]);
   // duplicate state variable to store filtered restaurant list
   const [filteredList, setFilteredList] = useState([]); 
-  
+
   const [searchText, setSearchText] = useState("");
 
   // Whenever the state variable updates or changes, react triggers re-consilation cycle or the component re-renders
-  console.log("Body rendered");
+  // console.log("Body rendered");
   // Function to filter restaurants with average rating greater than 4
   const ratingFilter = () => {
       const filterList = resJsonList.filter((resData) => {
@@ -30,15 +30,16 @@ const Body = () => {
   }
 
   useEffect(() => {
+    console.log("useEffect called");
     fetchRestaurantList()
   }, []);
 
   const fetchRestaurantList = async () => {
     const data01 = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.99740&lng=79.00110&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.147473547293863&lng=73.08054143461871&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data01.json();
-    console.log(json);
+    // console.log(json);
     
     setResJsonList(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
