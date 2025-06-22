@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { LOGO_URL } from "../utils/const";
 import { Link } from "react-router-dom";
+import useCheckOnlineStatus from "../utils/useCheckOnlineStatus";
 /** header component */
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState('Login');
   console.log('header rendered');
+  const getOnlineStatus = useCheckOnlineStatus();
   return (
     <header>
       <div className="container">
@@ -19,6 +21,11 @@ const Header = () => {
         <div className="nav-items">
           <ul>
             <li>
+            <span style={{ color: getOnlineStatus ? "green" : "red" }}>
+              {getOnlineStatus ? "Online" : "Offline"}
+            </span>
+            </li>
+            <li>
               <Link to="/">Home</Link>
             </li>
             <li>
@@ -26,6 +33,9 @@ const Header = () => {
             </li>
             <li>
               <Link to="/contact">Contact Us</Link>
+            </li>
+            <li>
+              <Link to="/grocery">Grocery</Link>
             </li>
             <li>
               <a href="#cart">Cart</a>

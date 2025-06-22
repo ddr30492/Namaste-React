@@ -1,34 +1,23 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
-import { MENU_URL } from "../utils/const"; // Uncomment if you have a constant for the URL
+import useFetchResturantMenu from "../utils/useFetchResturantMenu";
+import useCheckOnlineStatus from "../utils/useCheckOnlineStatus";
 
 const RestaurantMenu  = () => {
-
-    const [resInfo, setresInfo] = useState(null);
-
     const { resId } = useParams();
-
-    useEffect(() => {
-        // Simulate fetching restaurant menu data
-        fetchRestaurantMenu();
-    }, []);
-
-    const fetchRestaurantMenu = async () => {
-        // Simulated fetch function
-        console.log("Fetching restaurant menu data...");
-
-        const fetchData = await fetch(MENU_URL+resId);
-
-        const json = await fetchData.json();
-        setresInfo(json.data);
-        console.log(json);
-    }
+    const resInfo = useFetchResturantMenu(resId);
     
-    const {name, cuisines, costForTwo, avgRatingString, totalRatings} = resInfo?.cards[2]?.card?.card?.info || {};
+    const {name, cuisines, costForTwo, avgRatingString, totalRatings} = resInfo?.cards[1]?.card?.card?.info || {};
 
     const itemsCard = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card?.itemCards || {};
     console.log(itemsCard);
+
+    const onlineStatus = useCheckOnlineStatus();
+    
+    if(onlineStatus === false){
+        return <h1>You looklike offline.Please check your internet connection!</h1>
+    }
+
     return (resInfo === null) ? <Shimmer /> : (
         <div className="restaurant-menu container">
             <h1 className="restitle">{name}</h1>
