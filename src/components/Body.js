@@ -55,14 +55,14 @@ const Body = () => {
   // };
 
   return resJsonList.length === 0 ? <Shimmer /> : (
-    <div className="body">
-      <div className="container">
-        <div className="filters-wrapper">
-            <div className="search-bar">
-                <input type="text" placeholder="Search..." value={searchText} onChange={(e) => {
+    <div className="body mb-6">
+      <div className="container m-auto">
+        <div className="filters-wrapper flex items-center justify-between mb-6">
+            <div className="search-bar flex items-center gap-3">
+                <input className="border p-3 w-96 max-w-full rounded-md" type="text" placeholder="Search..." value={searchText} onChange={(e) => {
                   setSearchText(e.target.value);
                 }}/>
-                <button type="button" onClick={(e)=>{
+                <button className="bg-red-600 hover:bg-red-950 text-white p-3 px-6 rounded-md" type="button" onClick={(e)=>{
                     e.preventDefault();
                     const filteredList = resJsonList.filter((resData) => {
                         return resData?.info?.name.toLowerCase().includes(searchText.toLowerCase());
@@ -70,11 +70,11 @@ const Body = () => {
                     setFilteredList(filteredList);
                 }}>Search</button>
             </div>
-            <div className="filter" style={btnWrapper}>
-                <button type="button" className="btn btn-filter" onClick={ratingFilter}>Top Rated Restaurant</button>
+            <div className="filter">
+                <button type="button" className="bg-purple-600 hover:bg-purple-950 text-white p-3 px-7 rounded-md" onClick={ratingFilter}>Top Rated Restaurant</button>
             </div>
         </div>
-        <div className="restaurant-list">
+        <div className="restaurant-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 py-4">
           {filteredList.map((resData) => {
             return <RestaurantCard key={resData?.info?.id} resData={resData} />;
           })}
