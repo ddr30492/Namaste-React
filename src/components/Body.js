@@ -1,7 +1,8 @@
-import RestaurantCard from "./RestaurantCard";
-import { useEffect, useState } from "react";
+import RestaurantCard, { restrantIsOpenOrClosed } from "./RestaurantCard";
+import { useEffect, useState, useContext } from "react";
 // import resList from "../utils/mockdata";
 import Shimmer from "./Shimmer";
+import UserContext from "../utils/UserContext";
 
 const btnWrapper = {
     display: "flex",
@@ -24,9 +25,19 @@ const Body = () => {
   // Function to filter restaurants with average rating greater than 4
   const ratingFilter = () => {
       const filterList = resJsonList.filter((resData) => {
-          return resData?.info?.avgRating > 4
+          return resData?.info?.avgRating > 0
       });
-      setResJsonList(filterList);
+
+      const ratingByFilter = filterList.sort((a,b) => {
+        const aRating = parseFloat(a.info?.avgRating) || 0;
+        const bRating = parseFloat(b.info?.avgRating) || 0;
+        return bRating - aRating; // Descending order
+      });
+
+      console.log(ratingByFilter);
+
+      setResJsonList(ratingByFilter);
+      setFilteredList(ratingByFilter);
   }
 
   useEffect(() => {
@@ -49,10 +60,14 @@ const Body = () => {
     );
   }
 
+  const RestaurantStateNow = restrantIsOpenOrClosed(RestaurantCard);
+
   //conditional rendering
   // if (resJsonList.length === 0) {
   //   return <Shimmer />;
   // };
+
+  const { user, setUserName } = useContext(UserContext);
 
   return resJsonList.length === 0 ? <Shimmer /> : (
     <div className="body mb-6">
@@ -73,10 +88,14 @@ const Body = () => {
             <div className="filter">
                 <button type="button" className="bg-purple-600 hover:bg-purple-950 text-white p-3 px-7 rounded-md" onClick={ratingFilter}>Top Rated Restaurant</button>
             </div>
+            <div className="filter">
+                User Name: <input type="text" className="border p-3 w-96 max-w-full rounded-md" placeholder="Search by name..." value={user?.name} onChange={(e) => setUserName(e.target.value)} />
+            </div>
         </div>
         <div className="restaurant-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 py-4">
           {filteredList.map((resData) => {
-            return <RestaurantCard key={resData?.info?.id} resData={resData} />;
+            return resData?.info?.isOpen ? <RestaurantStateNow key={resData?.info?.id} resData={resData}/> :
+            <RestaurantCard key={resData?.info?.id} resData={resData} />
           })}
         </div>
       </div>

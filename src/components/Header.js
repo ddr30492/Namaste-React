@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LOGO_URL } from "../utils/const";
 import { Link } from "react-router-dom";
 import useCheckOnlineStatus from "../utils/useCheckOnlineStatus";
+import UserContext from "../utils/UserContext";
 /** header component */
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState('Login');
-  console.log('header rendered');
+
   const getOnlineStatus = useCheckOnlineStatus();
+
+  const data = useContext(UserContext);
   return (
     <header className="bg-stone-400 shadow-sm mb-3 sm:bg-pink-100">
       <div className="container m-auto">
@@ -45,6 +48,9 @@ const Header = () => {
                 <button className="bg-cyan-500 hover:bg-cyan-600 px-5 py-2 text-white rounded-lg" onClick={() => {
                   isLoggedIn === 'Login' ? setIsLoggedIn('Logout') : setIsLoggedIn('Login')
                 }}>{isLoggedIn}</button>
+              </li>
+              <li>
+                {data?.user?.name}
               </li>
             </ul>
           </div>
